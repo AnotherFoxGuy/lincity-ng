@@ -15,7 +15,7 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
-          sudo apt-get -y install libgl-dev libegl-dev
+          sudo apt-get -y install libgl-dev libegl-dev gettext
 
       - uses: lukka/get-cmake@latest
 
