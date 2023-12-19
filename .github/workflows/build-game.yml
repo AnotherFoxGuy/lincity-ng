@@ -10,7 +10,13 @@ jobs:
         os: [ windows-latest, ubuntu-latest ]
     steps:
       - uses: actions/checkout@v4
-      
+
+      - name: Install dependencies (Ubuntu)
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install libgl-dev libegl-dev
+
       - uses: lukka/get-cmake@latest
 
       - name: Setup anew (or from cache) vcpkg (and does not build any package)
