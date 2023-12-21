@@ -1,4 +1,4 @@
-name: Build
+name: Build game
 
 on: [push, pull_request]
 
@@ -19,15 +19,20 @@ jobs:
 
       - uses: lukka/get-cmake@latest
 
-      - name: Setup anew (or from cache) vcpkg (and does not build any package)
+      - name: Setup vcpkg 
         uses: lukka/run-vcpkg@v11 
         with:
           vcpkgGitCommitId: ' 48e95d1aa3fedd24234f1d436226d07fc2b4f45f'         
         
-      - name: Run CMake consuming CMakePreset.json and run vcpkg to build packages
+      - name: Build game
         uses: lukka/run-cmake@v10
         with:
           configurePreset: 'ninja-multi-vcpkg'
-          configurePresetAdditionalArgs: "['-DENABLE_YOUR_FEATURE=1']"
           buildPreset: 'ninja-multi-vcpkg'
           buildPresetAdditionalArgs: "['--config Release']"
+
+      - name: Upload bin folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: lincity-ng-${{ runner.os }}
+          path: builds/ninja-multi-vcpkg/bin/Release
